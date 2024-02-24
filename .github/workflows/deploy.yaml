@@ -22,7 +22,7 @@ jobs:
       - name: Set up Google Cloud SDK and auth
         uses: 'google-github-actions/auth@v2'
         with:
-          credentials_json: '$GCP_AUTH'
+          credentials_json: $GCP_AUTH
 
       - name: Execute deployment script
         run: bash deployment.sh $GCP_PROJECT_SECRET $GCS_SECRET
