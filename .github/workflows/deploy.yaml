@@ -24,4 +24,4 @@ jobs:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
       - name: Execute deployment script
-        run: bash deployment.sh $GCP_PROJECT_SECRET $GCS_SECRET
+        run: bash resources/Deployment/deployment.sh $GCP_PROJECT_SECRET $GCS_SECRET
