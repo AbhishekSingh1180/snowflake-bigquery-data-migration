@@ -11,7 +11,6 @@ jobs:
         fail-fast: true 
 
     env:
-        GCP_AUTH: ${{ secrets.GCP_SA_KEY }}
         GCP_PROJECT_SECRET: ${{ secrets.PROJECT_SECRET }}
         GCS_SECRET: ${{ secrets.GCS_SECRET }}
 
@@ -22,7 +21,7 @@ jobs:
       - name: Set up Google Cloud SDK and auth
         uses: 'google-github-actions/auth@v2'
         with:
-          credentials_json: $GCP_AUTH
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
 
       - name: Execute deployment script
         run: bash deployment.sh $GCP_PROJECT_SECRET $GCS_SECRET
