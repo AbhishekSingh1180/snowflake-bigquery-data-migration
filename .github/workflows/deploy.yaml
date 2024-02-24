@@ -12,7 +12,7 @@ jobs:
 
     env:
         GCP_AUTH: ${{ secrets.GCP_SA_KEY }}
-        GCP_PROJECT_SECRET: ${{ secrets.GCS_SECRET }}
+        GCP_PROJECT_SECRET: ${{ secrets.PROJECT_SECRET }}
         GCS_SECRET: ${{ secrets.GCS_SECRET }}
 
     steps:
