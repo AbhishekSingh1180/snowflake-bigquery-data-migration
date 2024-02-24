@@ -12,4 +12,4 @@ read -r BUCKET_NAME GCS_FOLDER <<< $(echo "$2" | tr ',' ' ')
 gcloud storage buckets create gs://$BUCKET_NAME --project=$PROJECT_NAME --location=$REGION --no-public-access-prevention --no-uniform-bucket-level-access
 
 # cp local folder to GCS bucket
-gsutil -m cp $FOLDER_PATH gs://$BUCKET_NAME/$GCS_FOLDER
+gcloud storage cp $FOLDER_PATH gs://$BUCKET_NAME/$GCS_FOLDER
