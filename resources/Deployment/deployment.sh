@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FOLDER_PATH='resources/Storage/apcha.csv'
+FOLDER_PATH='resources/Storage/*'
 
 # Set project ID and region from Project Secrets
 read -r PROJECT_NAME REGION <<< $(echo "$1" | tr ',' ' ')
@@ -12,4 +12,4 @@ read -r BUCKET_NAME GCS_FOLDER <<< $(echo "$2" | tr ',' ' ')
 gcloud storage buckets create gs://$BUCKET_NAME --project=$PROJECT_NAME --location=$REGION --no-public-access-prevention --no-uniform-bucket-level-access
 
 # cp local folder to GCS bucket
-gcloud storage cp $FOLDER_PATH gs://$BUCKET_NAME/$GCS_FOLDER/
+gcloud storage cp $FOLDER_PATH gs://$BUCKET_NAME
