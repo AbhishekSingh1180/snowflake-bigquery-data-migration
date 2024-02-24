@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FOLDER_PATH='resources/Storage/'
+FOLDER_PATH='resources/Storage/*'
 
 # Set project ID and region from Project Secrets
 read -r PROJECT_NAME REGION <<< $(echo "$1" | tr ',' ' ')
