@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FOLDER_PATH = 'resources/Storage/apcha.csv'
+FOLDER_PATH='resources/Storage/apcha.csv'
 
 # Set project ID and region from Project Secrets
 read -r PROJECT_NAME REGION <<< $(echo "$1" | tr ',' ' ')
