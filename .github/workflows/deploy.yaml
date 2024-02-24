@@ -1,9 +1,7 @@
 name: Deploy to GCS
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -21,12 +19,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Google Cloud SDK
-        uses: google-github-actions/setup-gcloud@v0.3.0
+      - name: Set up Google Cloud SDK and auth
+        uses: 'google-github-actions/auth@v2'
         with:
-          service_account_key: $GCP_AUTH
-          project_id: 
-          export_default_credentials: true
+          credentials_json: '$GCP_AUTH'
 
       - name: Execute deployment script
         run: bash deployment.sh $GCP_PROJECT_SECRET $GCS_SECRET
