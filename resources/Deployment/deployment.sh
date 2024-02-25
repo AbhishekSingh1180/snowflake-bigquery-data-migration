@@ -30,28 +30,14 @@ echo "$(date) - ARCHIVE" | gcloud storage cp - gs://$BUCKET_NAME/$GCS_ARCHIVE_FO
 
 # STEP 2 : Setup storage integration for snowflake out stage to GCS for file transfering
 
-EXECUTE_SQL_SCRIPT="execute.sql" 
+CREATE_STORAGE_INT="CREATE STORAGE INTEGRATION GCS_STORAGE_INT TYPE = EXTERNAL_STAGE STORAGE_PROVIDER = 'GCS' ENABLED = TRUE STORAGE_ALLOWED_LOCATIONS = ('gcs://$BUCKET_NAME/$GCS_SINK_FOLDER/');"
+CREATE_OUT_STAGE="CREATE STAGE FINANCE_DB.DW_APPL.SENSEX_DATA_STAGE_OUT URL = 'gcs://$BUCKET_NAME/$GCS_SINK_FOLDER/' STORAGE_INTEGRATION = GCS_STORAGE_INT FILE_FORMAT = (TYPE = CSV SKIP_HEADER = 1);"
 
-echo "CREATE STORAGE INTEGRATION GCS_STORAGE_INT \
-  TYPE = EXTERNAL_STAGE \
-  STORAGE_PROVIDER = 'GCS' \
-  ENABLED = TRUE \
-  STORAGE_ALLOWED_LOCATIONS = ('gcs://$BUCKET_NAME/$GCS_SINK_FOLDER/');" 
->> $EXECUTE_SQL_SCRIPT
-
-echo "CREATE STAGE FINANCE_DB.DW_APPL.SENSEX_DATA_STAGE_OUT \
-  URL = 'gcs://$BUCKET_NAME/$GCS_SINK_FOLDER/' \
-  STORAGE_INTEGRATION = GCS_STORAGE_INT \
-  FILE_FORMAT = (TYPE = CSV SKIP_HEADER = 1);"
->> $EXECUTE_SQL_SCRIPT
-
-~/bin/snowsql --config ~/.snowsql/config --connection awesome -w "COMPUTE_WH" -f $EXECUTE_SQL_SCRIPT 
-rm -rf $EXECUTE_SQL_SCRIPT
+~/bin/snowsql --config ~/.snowsql/config --connection awesome -w "COMPUTE_WH" -q $CREATE_STORAGE_INT
+~/bin/snowsql --config ~/.snowsql/config --connection awesome -w "COMPUTE_WH" -q $CREATE_OUT_STAGE
 
 # Retrieve service account
 SNF_SERVICE_ACCOUNT=$(~/bin/snowsql --config ~/.snowsql/config --connection awesome -w "COMPUTE_WH" -q "DESC STORAGE INTEGRATION GCS_STORAGE_INT" -o output_format=csv -o header=false | awk 'NR==7' | cut -d',' -f3 | tr -d '"' )
-
-gcloud iam roles create $CUSTOM_ROLE --project=$PROJECT_NAME --title="Custom Snowflake GCS Writer" --description="Custom role with minimal permissions for Snowflake to load data into GCS" --permissions=$PERMISION_1,$PERMISION_2,$PERMISION_3 --quiet
 
 gcloud storage buckets add-iam-policy-binding gs://$BUCKET_NAME --member=serviceAccount:$SNF_SERVICE_ACCOUNT --role=projects/$PROJECT_NAME/roles/$CUSTOM_ROLE --project=$PROJECT_NAME --quiet
 
