@@ -38,4 +38,6 @@ jobs:
             password = $SNF_PASSWORD" > ~/.snowsql/config
 
       - name: Execute deployment script
-        run: bash resources/Deployment/deployment.sh $GCP_PROJECT_SECRET $GCS_SECRET $GCS_IAM_SECRET $BQ_SECRET
+        run: |
+            gcloud config set compute/region  
+            bash resources/Deployment/deployment.sh $GCP_PROJECT_SECRET $GCS_SECRET $GCS_IAM_SECRET $BQ_SECRET

@@ -11,18 +11,20 @@ read -r BUCKET_NAME GCS_SINK_FOLDER GCS_ARCHIVE_FOLDER <<< $(echo "$2" | tr ',' 
 read -r CUSTOM_ROLE PERMISION_1 PERMISION_2 PERMISION_3  <<< $(echo "$3" | tr ',' ' ')
 # Set BQ Variables from BQ Secrets
 read -r DATASET_NAME TABLE_NAME <<< $(echo "$4" | tr ',' ' ')
+# Set Region
+gcloud config set compute/region $REGION
 
 #----------------------------------------------------------------------------------------------------------
 
 # # STEP 1 : Setup GCS bucket
 
 # Create GCS bucket
-gcloud storage buckets create gs://$BUCKET_NAME --project=$PROJECT_NAME  --location=$REGION --public-access-prevention --uniform-bucket-level-access
+gcloud storage buckets create gs://$BUCKET_NAME --project=$PROJECT_NAME  --location=$REGION --public-access-prevention --uniform-bucket-level-access --quiet
 
 # CP setup files to GCS bucket
 gcloud storage cp -r $FOLDER_PATH gs://$BUCKET_NAME/
-echo "$(date) - SINK" | gcloud storage cp - gs://$BUCKET_NAME/$GCS_SINK_FOLDER/init.txt
-echo "$(date) - ARCHIVE" | gcloud storage cp - gs://$BUCKET_NAME/$GCS_ARCHIVE_FOLDER/init.txt
+echo "$(date) - SINK" | gcloud storage cp - gs://$BUCKET_NAME/$GCS_SINK_FOLDER/init.txt --quiet
+echo "$(date) - ARCHIVE" | gcloud storage cp - gs://$BUCKET_NAME/$GCS_ARCHIVE_FOLDER/init.txt --quiet
 
 #----------------------------------------------------------------------------------------------------------
 
@@ -49,14 +51,14 @@ rm -rf $EXECUTE_SQL_SCRIPT
 # Retrieve service account
 SNF_SERVICE_ACCOUNT=$(~/bin/snowsql --config ~/.snowsql/config --connection awesome -w "COMPUTE_WH" -q "DESC STORAGE INTEGRATION GCS_STORAGE_INT" -o output_format=csv -o header=false | awk 'NR==7' | cut -d',' -f3 | tr -d '"' )
 
-gcloud iam roles create $CUSTOM_ROLE --project=$PROJECT_NAME --title="Custom Snowflake GCS Writer" --description="Custom role with minimal permissions for Snowflake to load data into GCS" --permissions=$PERMISION_1,$PERMISION_2,$PERMISION_3
+gcloud iam roles create $CUSTOM_ROLE --project=$PROJECT_NAME --title="Custom Snowflake GCS Writer" --description="Custom role with minimal permissions for Snowflake to load data into GCS" --permissions=$PERMISION_1,$PERMISION_2,$PERMISION_3 --quiet
 
-gcloud storage buckets add-iam-policy-binding gs://$BUCKET_NAME --member=serviceAccount:$SNF_SERVICE_ACCOUNT --role=projects/$PROJECT_NAME/roles/$CUSTOM_ROLE --project=$PROJECT_NAME 
+gcloud storage buckets add-iam-policy-binding gs://$BUCKET_NAME --member=serviceAccount:$SNF_SERVICE_ACCOUNT --role=projects/$PROJECT_NAME/roles/$CUSTOM_ROLE --project=$PROJECT_NAME --quiet
 
 #----------------------------------------------------------------------------------------------------------
 
 # STEP 3 : Setup BigQuery Dataset and table
-bq --location=$REGION mk -t $PROJECT_NAME:$DATASET_NAME
-bq --location=$REGION mk -t $PROJECT_NAME:$DATASET_NAME.$TABLE_NAME $BQ_SCHEMA_PATH
+# bq --location=$REGION mk -t $PROJECT_NAME:$DATASET_NAME
+# bq --location=$REGION mk -t $PROJECT_NAME:$DATASET_NAME.$TABLE_NAME $BQ_SCHEMA_PATH
 
 #----------------------------------------------------------------------------------------------------------
