@@ -1,9 +1,6 @@
-# Sensex-Data-Analysis
+# Snowflake-Bigquery-Data-Migration
 
-[![Automated Data Extraction and Loading](https://github.com/AbhishekSingh1180/sensex-data-analysis/actions/workflows/main.yml/badge.svg)](https://github.com/AbhishekSingh1180/sensex-data-analysis/actions/workflows/main.yml)
+[![Automated Pipeline Deployment](https://github.com/AbhishekSingh1180/sensex-data-analysis/actions/workflows/main.yml/badge.svg)](https://github.com/AbhishekSingh1180/sensex-data-analysis/actions/workflows/main.yml)
 
-[![Deploy DDL SQL with SnowSQL](https://github.com/AbhishekSingh1180/sensex-data-analysis/actions/workflows/deploy.yml/badge.svg)](https://github.com/AbhishekSingh1180/sensex-data-analysis/actions/workflows/deploy.yml)
-
-![Diagram](https://github.com/AbhishekSingh1180/sensex-data-analysis/blob/main/Diagram/sensex-data-analysis.png)
-
-Leveraged GitHub Actions for streamlined data extraction from Yahoo finance API, Snowflake and SnowSQL for extraction, storage, and transformation for Sensex Data.
+Leveraged GitHub Actions for streamlined GCP Pipeline deployment for Snowflake to BigQuery data migration. 
+Using [sensex-data-analysis](https://github.com/AbhishekSingh1180/sensex-data-analysis) as source and snowflake storage integration feature to load data to GCS and workflow manangement/transformation using Composer(Airflow) and Dataflow.

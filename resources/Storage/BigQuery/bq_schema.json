@@ -1,10 +1,13 @@
-[
-    { "name": "index", "type": "STRING", "mode" : "required"}, 
-    { "name": "symbol", "type": "STRING", "mode" : "required" },
-    { "name": "timestamp", "type": "TIMESTAMP", "mode" : "required" }, 
-    { "name": "open", "type": "FLOAT", "mode" : "required" }, 
-    { "name": "close", "type": "FLOAT", "mode" : "required" }, 
-    { "name": "high", "type": "FLOAT", "mode" : "required" },
-    { "name": "low", "type": "FLOAT", "mode" : "required" },
-    { "name": "volume", "type": "INTEGER", "mode" : "required" }
-]
+{ 
+    "schema":  
+    [
+        { "name": "index", "type": "STRING", "mode" : "required"}, 
+        { "name": "symbol", "type": "STRING", "mode" : "required" },
+        { "name": "timestamp", "type": "TIMESTAMP", "mode" : "required" }, 
+        { "name": "open", "type": "FLOAT", "mode" : "required" }, 
+        { "name": "close", "type": "FLOAT", "mode" : "required" }, 
+        { "name": "high", "type": "FLOAT", "mode" : "required" },
+        { "name": "low", "type": "FLOAT", "mode" : "required" },
+        { "name": "volume", "type": "INTEGER", "mode" : "required" }
+    ]
+}
