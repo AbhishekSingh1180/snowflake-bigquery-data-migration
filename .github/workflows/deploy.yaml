@@ -26,7 +26,7 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
-      - name: Install SnowSQL
+      - name: Install SnowSQL and Gcloud Apha 
         run: |
             curl -O "https://sfc-repo.snowflakecomputing.com/snowsql/bootstrap/1.2/linux_x86_64/snowsql-1.2.31-linux_x86_64.bash"
             SNOWSQL_DEST=~/bin SNOWSQL_LOGIN_SHELL=~/.profile bash snowsql-1.2.31-linux_x86_64.bash
@@ -36,6 +36,7 @@ jobs:
             accountname = $SNF_ACCOUNT
             username = $SNF_USERNAME
             password = $SNF_PASSWORD" > ~/.snowsql/config
+            gcloud components install alpha
 
       - name: Execute deployment script
         run: bash resources/Deployment/deployment.sh $GCP_PROJECT_SECRET $GCS_SECRET $GCS_IAM_SECRET $BQ_SECRET
