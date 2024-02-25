@@ -8,11 +8,12 @@ read -r PROJECT_NAME REGION <<< $(echo "$1" | tr ',' ' ')
 # Set GCS Variables from GCS Secrets
 read -r BUCKET_NAME GCS_SINK_FOLDER GCS_ARCHIVE_FOLDER <<< $(echo "$2" | tr ',' ' ')
 # SET GCS iam policy Variables from GCS IAM Secrets
-read -r CUSTOM_ROLE PERMISION_1 PERMISION_2 PERMISION_3  <<< $(echo "$3" | tr ',' ' ')
+CUSTOM_ROLE="$3"
 # Set BQ Variables from BQ Secrets
 read -r DATASET_NAME TABLE_NAME <<< $(echo "$4" | tr ',' ' ')
 # Set Region
 gcloud config set compute/region $REGION
+gcloud config set project $PROJECT_NAME
 
 #----------------------------------------------------------------------------------------------------------
 
