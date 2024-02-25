@@ -47,16 +47,10 @@ echo "CREATE STAGE FINANCE_DB.DW_APPL.SENSEX_DATA_STAGE_OUT \
 rm -rf $EXECUTE_SQL_SCRIPT
 
 # Retrieve service account
-SNF_SERVICE_ACCOUNT=$(~/bin/snowsql --config ~/.snowsql/config --connection awesome -w "COMPUTE_WH" -q "DESC STORAGE INTEGRATION GCS_STORAGE_INT" \
--o output_format=csv -o header=false | awk 'NR==7' | cut -d',' -f3 | tr -d '"' )
+SNF_SERVICE_ACCOUNT=$(~/bin/snowsql --config ~/.snowsql/config --connection awesome -w "COMPUTE_WH" -q "DESC STORAGE INTEGRATION GCS_STORAGE_INT" -o output_format=csv -o header=false | awk 'NR==7' | cut -d',' -f3 | tr -d '"' )
 
-gcloud iam roles create $CUSTOM_ROLE /
-    --project=$PROJECT_NAME /
-    --title="Custom Snowflake GCS Writer" /
-    --description="Custom role with minimal permissions for Snowflake to load data into GCS" /
-    --permissions=$PERMISION_1,$PERMISION_2,$PERMISION_3
+gcloud iam roles create $CUSTOM_ROLE --project=$PROJECT_NAME --title="Custom Snowflake GCS Writer" --description="Custom role with minimal permissions for Snowflake to load data into GCS" --permissions=$PERMISION_1,$PERMISION_2,$PERMISION_3
 
-#
 gcloud storage buckets add-iam-policy-binding gs://$BUCKET_NAME --member=serviceAccount:$SNF_SERVICE_ACCOUNT --role=projects/$PROJECT_NAME/roles/$CUSTOM_ROLE --project=$PROJECT_NAME 
 
 #----------------------------------------------------------------------------------------------------------
