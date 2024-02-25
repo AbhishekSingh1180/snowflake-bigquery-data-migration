@@ -36,7 +36,6 @@ jobs:
             accountname = $SNF_ACCOUNT
             username = $SNF_USERNAME
             password = $SNF_PASSWORD" > ~/.snowsql/config
-            gcloud components install alpha
 
       - name: Execute deployment script
         run: bash resources/Deployment/deployment.sh $GCP_PROJECT_SECRET $GCS_SECRET $GCS_IAM_SECRET $BQ_SECRET

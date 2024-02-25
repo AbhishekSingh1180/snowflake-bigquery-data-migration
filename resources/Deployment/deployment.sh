@@ -44,10 +44,10 @@ gcloud storage buckets add-iam-policy-binding gs://$BUCKET_NAME --member=service
 
 # STEP 3 : Setup BigQuery Dataset and table
 # bq --location=$REGION mk -t $PROJECT_NAME:$DATASET_NAME
-gcloud alpha bq datasets create $DATASET_NAME --project=$PROJECT_NAME
+gcloud alpha bq datasets create $DATASET_NAME --project=$PROJECT_NAME --quiet
 
 # bq --location=$REGION mk -t $PROJECT_NAME:$DATASET_NAME.$TABLE_NAME $BQ_SCHEMA_PATH
-gcloud alpha bq tables create /projects/$PROJECT_NAME/datasets/$DATASET_NAME/tables/$TABLE_NAME --description 'Sink table' --schema-file=$BQ_SCHEMA_PATH
+gcloud alpha bq tables create /projects/$PROJECT_NAME/datasets/$DATASET_NAME/tables/$TABLE_NAME --description 'Sink table' --schema-file=$BQ_SCHEMA_PATH --quiet
 
 
 #----------------------------------------------------------------------------------------------------------
