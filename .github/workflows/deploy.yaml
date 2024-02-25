@@ -13,6 +13,9 @@ jobs:
     env:
         GCP_PROJECT_SECRET: ${{ secrets.PROJECT_SECRET }}
         GCS_SECRET: ${{ secrets.GCS_SECRET }}
+        GCS_IAM_SECRET: ${{ secrets.GCS_IAM_SECRET }}
+        SNOWFLAKE_SECRET: ${{ secrets.SNOWFLAKE_SECRET }}
+        BQ_SECRET: ${{ secrets.BQ_SECRET }}
 
     steps:
       - name: Checkout code
@@ -23,5 +26,16 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
+      - name: Install SnowSQL
+        run: |
+            curl -O "https://sfc-repo.snowflakecomputing.com/snowsql/bootstrap/1.2/linux_x86_64/snowsql-1.2.31-linux_x86_64.bash"
+            SNOWSQL_DEST=~/bin SNOWSQL_LOGIN_SHELL=~/.profile bash snowsql-1.2.31-linux_x86_64.bash
+            ~/bin/snowsql --version
+            read -r SNF_ACCOUNT SNF_USERNAME SNF_PASSWORD <<< $(echo "$SNOWFLAKE_SECRET" | tr ',' ' ')
+            echo "[connections.awesome]
+            accountname = $SNF_ACCOUNT
+            username = $SNF_USERNAME
+            password = $SNF_PASSWORD" > ~/.snowsql/config
+
       - name: Execute deployment script
-        run: bash resources/Deployment/deployment.sh $GCP_PROJECT_SECRET $GCS_SECRET
+        run: bash resources/Deployment/deployment.sh $GCP_PROJECT_SECRET $GCS_SECRET $GCS_IAM_SECRET $BQ_SECRET

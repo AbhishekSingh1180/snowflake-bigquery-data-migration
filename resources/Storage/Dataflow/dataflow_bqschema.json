@@ -1,0 +1,10 @@
+{ "BigQuery Schema": [ 
+    { "name": "index", "type": "STRING" }, 
+    { "name": "symbol", "type": "STRING" },
+    { "name": "timestamp", "type": "TIMESTAMP" }, 
+    { "name": "open", "type": "FLOAT" }, 
+    { "name": "close", "type": "FLOAT" }, 
+    { "name": "high", "type": "FLOAT" },
+    { "name": "low", "type": "FLOAT" },
+    { "name": "volume", "type": "INTEGER" }
+] }
