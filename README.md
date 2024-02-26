@@ -7,5 +7,4 @@
 ## AIRFLOW DAG VIEW
 ![Diagram](https://github.com/AbhishekSingh1180/snowflake-bigquery-data-migration/blob/main/diagram/airflow-dag-view.png)
 
-Leveraged GitHub Actions for streamlined GCP Pipeline deployment for Snowflake to BigQuery data migration. 
-Using [sensex-data-analysis](https://github.com/AbhishekSingh1180/sensex-data-analysis) as source and snowflake storage integration feature to load data to GCS and workflow manangement/transformation using Composer(Airflow) and Dataflow.
+Leveraged GitHub Actions to automate the deployment of a GCP pipeline for Snowflake to BigQuery data migration. Utilized [sensex-data-analysis](https://github.com/AbhishekSingh1180/sensex-data-analysis) as the data source and Snowflake storage integration feature to load data to GCS. Implemented workflow management and transformation using Composer (Airflow) and Dataflow
