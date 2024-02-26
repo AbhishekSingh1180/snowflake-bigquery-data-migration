@@ -2,6 +2,7 @@
 
 [![Automated Pipeline Deployment](https://github.com/AbhishekSingh1180/snowflake-bigquery-data-migration/actions/workflows/deploy.yaml/badge.svg)](https://github.com/AbhishekSingh1180/snowflake-bigquery-data-migration/actions/workflows/deploy.yaml)
 
+![Diagram](https://github.com/AbhishekSingh1180/snowflake-bigquery-data-migration/blob/main/diagram/snf-bq-migration.png)
 
 ## AIRFLOW DAG VIEW
 ![Diagram](https://github.com/AbhishekSingh1180/snowflake-bigquery-data-migration/blob/main/diagram/airflow-dag-view.png)
