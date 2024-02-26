@@ -1,10 +1,10 @@
 { "BigQuery Schema": [ 
-    { "name": "index", "type": "STRING" }, 
-    { "name": "symbol", "type": "STRING" },
-    { "name": "timestamp", "type": "TIMESTAMP" }, 
-    { "name": "open", "type": "FLOAT" }, 
-    { "name": "close", "type": "FLOAT" }, 
-    { "name": "high", "type": "FLOAT" },
-    { "name": "low", "type": "FLOAT" },
-    { "name": "volume", "type": "INTEGER" }
+    { "name": "close", "type": "FLOAT", "mode": "REQUIRED"},
+    { "name": "high", "type": "FLOAT", "mode": "REQUIRED"}, 
+    { "name": "index", "type": "STRING", "mode": "REQUIRED"}, 
+    { "name": "low", "type": "FLOAT", "mode": "REQUIRED"},
+    { "name": "open", "type": "FLOAT", "mode": "REQUIRED"}, 
+    { "name": "symbol", "type": "STRING", "mode": "REQUIRED"},
+    { "name": "timestamp", "type": "TIMESTAMP", "mode": "REQUIRED"}, 
+    { "name": "volume", "type": "INTEGER", "mode": "REQUIRED"}
 ] }
